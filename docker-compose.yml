@@ -2,7 +2,7 @@ version: "3"
 
 services:
     postgres:
-        container_name: fastFoodPostgresdb
+        container_name: fastFoodProdutosPostgresdb
         image: postgres:latest
         ports:
             - "5432:5432"
@@ -19,7 +19,7 @@ services:
         networks:
             - fastFoodNetwork
     api:
-        container_name: fastFoodApi
+        container_name: fastFoodProdutosApi
         build: "."
         working_dir: /fastFood
         environment:
