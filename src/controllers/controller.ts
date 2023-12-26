@@ -56,7 +56,7 @@ export class ProdutoController {
             if (!id) {
                 return res
                     .status(StatusCode.unprocessableEntity)
-                    .json({ message: "Missing identifier categoria" });
+                    .json({ message: "Missing id" });
             }
 
             const result = await this.produtoUseCase.update(id, req.body);
@@ -78,7 +78,7 @@ export class ProdutoController {
             if (!id) {
                 return res
                     .status(StatusCode.unprocessableEntity)
-                    .json({ message: "Missing identifier categoria" });
+                    .json({ message: "Missing id" });
             }
 
             await this.produtoUseCase.delete(id);
