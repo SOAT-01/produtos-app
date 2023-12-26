@@ -11,6 +11,7 @@ module.exports = {
         "!**/api/{routes,docs}/**",
         "!**/api/middlewares/{index}.ts",
         "!**/api/{index,server}.ts",
+        "!**/controllers/{index,factory}.ts",
         "!**/config/**",
         "!**/utils/{requestLogger,statusCode}.ts",
         "!**/utils/errors/**",
@@ -21,6 +22,7 @@ module.exports = {
     }),
     modulePaths: ["<rootDir>/src", "<rootDir>/tests"],
     testRegex: "tests/.*\\.(test|spec)\\.ts$",
+
     moduleFileExtensions: ["ts", "js", "json", "node"],
     testEnvironment: "node",
 };
