@@ -16,22 +16,22 @@ describe("Given ProdutoUseCases", () => {
     });
     class ProdutoGatewayStub implements ProdutoGateway {
         create(produto: Produto): Promise<Produto> {
-            return new Promise((resolve) => resolve(mockProduto));
+            return Promise.resolve(mockProduto);
         }
         getByCategoria(categoria: Categoria): Promise<Produto[]> {
-            return new Promise((resolve) => resolve([mockProduto]));
+            return Promise.resolve([mockProduto]);
         }
         getById(id: string): Promise<Produto> {
-            return new Promise((resolve) => resolve(mockProduto));
+            return Promise.resolve(mockProduto);
         }
         getByIds(ids: string[]): Promise<Produto[]> {
-            return new Promise((resolve) => resolve([mockProduto]));
+            return Promise.resolve([mockProduto]);
         }
         update(id: string, produto: Partial<Produto>): Promise<Produto> {
-            return new Promise((resolve) => resolve(mockProduto));
+            return Promise.resolve(mockProduto);
         }
         delete(id: string): Promise<void> {
-            return new Promise((resolve) => resolve());
+            return Promise.resolve();
         }
     }
 
