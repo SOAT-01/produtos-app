@@ -1,61 +1,12 @@
 {
   "version": "5",
   "dialect": "pg",
-  "id": "6d1b2893-eb6d-467e-b6de-aee02512150f",
+  "id": "be74379a-4bbf-4be2-ad7e-00b673b6d27e",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
-    "clientes": {
-      "name": "clientes",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "uuid",
-          "primaryKey": true,
-          "notNull": true,
-          "default": "gen_random_uuid()"
-        },
-        "nome": {
-          "name": "nome",
-          "type": "varchar(256)",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "email": {
-          "name": "email",
-          "type": "varchar(256)",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "cpf": {
-          "name": "cpf",
-          "type": "varchar(256)",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "deleted": {
-          "name": "deleted",
-          "type": "boolean",
-          "primaryKey": false,
-          "notNull": false,
-          "default": false
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {},
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {}
-    },
     "produtos": {
       "name": "produtos",
-      "schema": "",
+      "schema": "produto",
       "columns": {
         "id": {
           "name": "id",
@@ -116,7 +67,9 @@
     }
   },
   "enums": {},
-  "schemas": {},
+  "schemas": {
+    "produto": "produto"
+  },
   "_meta": {
     "schemas": {},
     "tables": {},
