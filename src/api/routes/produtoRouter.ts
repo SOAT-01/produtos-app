@@ -7,6 +7,10 @@ export function makeProdutoRouter(): Router {
         produtoController.post(req, res, next),
     );
 
+    produtoRouter.get("/", async (req, res, next) => {
+        produtoController.getByIds(req, res, next);
+    });
+
     produtoRouter.get("/:categoria", async (req, res, next) => {
         produtoController.get(req, res, next);
     });

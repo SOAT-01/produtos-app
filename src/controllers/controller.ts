@@ -45,6 +45,29 @@ export class ProdutoController {
         }
     }
 
+    public async getByIds(
+        req: Request,
+        res: Response,
+        next: NextFunction,
+    ): Promise<Response> {
+        try {
+            const ids = (req.query.ids as string) || "";
+            const parsedIds = ids.split(";");
+
+            if (!parsedIds.length) {
+                return res
+                    .status(StatusCode.unprocessableEntity)
+                    .json({ message: "Missing id list" });
+            }
+
+            const result = await this.produtoUseCase.getByIds(parsedIds);
+
+            return res.status(StatusCode.ok).json(result);
+        } catch (error) {
+            next(error);
+        }
+    }
+
     public async patch(
         req: Request,
         res: Response,
