@@ -131,6 +131,36 @@ describe("ProdutoController", () => {
             });
         });
 
+        describe("When id list is present in query parameter", () => {
+            it("should return the found produto list", async () => {
+                const mockRequest = {
+                    query: {
+                        ids: "001;002;003",
+                    },
+                } as any;
+                const mockResponse = {
+                    status: jest.fn().mockReturnThis(),
+                    json: jest.fn(),
+                } as any;
+                const mockNextFunction = jest.fn();
+
+                const expectedResult = { id: "someId", ...mockRequest.body };
+                produtoUseCaseMock.getByIds = jest
+                    .fn()
+                    .mockResolvedValue(expectedResult);
+
+                await produtoControllerMock.getByIds(
+                    mockRequest,
+                    mockResponse,
+                    mockNextFunction,
+                );
+
+                expect(mockResponse.status).toHaveBeenCalledWith(StatusCode.ok);
+                expect(mockResponse.json).toHaveBeenCalledWith(expectedResult);
+                expect(mockNextFunction).not.toHaveBeenCalled();
+            });
+        });
+
         describe("When an error happens", () => {
             it("should handle errors by calling the next function with the error", async () => {
                 const mockRequest = {
