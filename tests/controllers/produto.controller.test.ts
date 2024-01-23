@@ -130,6 +130,27 @@ describe("ProdutoController", () => {
                 expect(mockNextFunction).not.toHaveBeenCalled();
             });
         });
+        describe("When an unexpected error happens", () => {
+            it("should handle errors by calling the next function with the error", async () => {
+                const mockRequest = {} as any;
+                const mockResponse = {} as any;
+                const mockNextFunction = jest.fn();
+
+                produtoUseCaseMock.getByIds = jest
+                    .fn()
+                    .mockRejectedValue(new Error("Server error"));
+
+                await produtoControllerMock.getByIds(
+                    mockRequest,
+                    mockResponse,
+                    mockNextFunction,
+                );
+
+                expect(mockNextFunction).toHaveBeenCalledWith(
+                    expect.any(Error),
+                );
+            });
+        });
     });
 
     describe("Given get method is called", () => {
