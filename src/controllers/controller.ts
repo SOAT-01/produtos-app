@@ -51,14 +51,15 @@ export class ProdutoController {
         next: NextFunction,
     ): Promise<Response> {
         try {
-            const ids = (req.query.ids as string) || "";
-            const parsedIds = ids.split(";");
+            const ids = (req.query.ids as string) || null;
 
-            if (!parsedIds.length) {
+            if (!ids) {
                 return res
                     .status(StatusCode.unprocessableEntity)
                     .json({ message: "Missing id list" });
             }
+
+            const parsedIds = ids.split(";");
 
             const result = await this.produtoUseCase.getByIds(parsedIds);
 
