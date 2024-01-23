@@ -74,6 +74,64 @@ describe("ProdutoController", () => {
         });
     });
 
+    describe("Given getById method is called", () => {
+        describe("When id list is present in query parameter", () => {
+            it("should return the found produto list", async () => {
+                const mockRequest = {
+                    query: {
+                        ids: "001;002;003",
+                    },
+                } as any;
+                const mockResponse = {
+                    status: jest.fn().mockReturnThis(),
+                    json: jest.fn(),
+                } as any;
+                const mockNextFunction = jest.fn();
+
+                const expectedResult = { id: "someId", ...mockRequest.body };
+                produtoUseCaseMock.getByIds = jest
+                    .fn()
+                    .mockResolvedValue(expectedResult);
+
+                await produtoControllerMock.getByIds(
+                    mockRequest,
+                    mockResponse,
+                    mockNextFunction,
+                );
+
+                expect(mockResponse.status).toHaveBeenCalledWith(StatusCode.ok);
+                expect(mockResponse.json).toHaveBeenCalledWith(expectedResult);
+                expect(mockNextFunction).not.toHaveBeenCalled();
+            });
+        });
+        describe("When the id list is not present", () => {
+            it("should return a response with unprocessableEntity(422) status code", async () => {
+                const mockRequest = {
+                    query: { ids: "" },
+                } as any;
+                const mockResponse = {
+                    status: jest.fn().mockReturnThis(),
+                    json: jest.fn(),
+                } as any;
+                const mockNextFunction = jest.fn();
+
+                await produtoControllerMock.getByIds(
+                    mockRequest,
+                    mockResponse,
+                    mockNextFunction,
+                );
+
+                expect(mockResponse.status).toHaveBeenCalledWith(
+                    StatusCode.unprocessableEntity,
+                );
+                expect(mockResponse.json).toHaveBeenCalledWith({
+                    message: "Missing id list",
+                });
+                expect(mockNextFunction).not.toHaveBeenCalled();
+            });
+        });
+    });
+
     describe("Given get method is called", () => {
         describe("When all the data is correct and no problems are found", () => {
             it("should return the found data", async () => {
@@ -127,36 +185,6 @@ describe("ProdutoController", () => {
                 expect(mockResponse.json).toHaveBeenCalledWith({
                     message: "Missing identifier categoria",
                 });
-                expect(mockNextFunction).not.toHaveBeenCalled();
-            });
-        });
-
-        describe("When id list is present in query parameter", () => {
-            it("should return the found produto list", async () => {
-                const mockRequest = {
-                    query: {
-                        ids: "001;002;003",
-                    },
-                } as any;
-                const mockResponse = {
-                    status: jest.fn().mockReturnThis(),
-                    json: jest.fn(),
-                } as any;
-                const mockNextFunction = jest.fn();
-
-                const expectedResult = { id: "someId", ...mockRequest.body };
-                produtoUseCaseMock.getByIds = jest
-                    .fn()
-                    .mockResolvedValue(expectedResult);
-
-                await produtoControllerMock.getByIds(
-                    mockRequest,
-                    mockResponse,
-                    mockNextFunction,
-                );
-
-                expect(mockResponse.status).toHaveBeenCalledWith(StatusCode.ok);
-                expect(mockResponse.json).toHaveBeenCalledWith(expectedResult);
                 expect(mockNextFunction).not.toHaveBeenCalled();
             });
         });
