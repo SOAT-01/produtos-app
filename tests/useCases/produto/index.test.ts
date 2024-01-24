@@ -7,6 +7,8 @@ describe("Given ProdutoUseCases", () => {
     let gatewayStub: ProdutoGateway;
     let sut: ProdutoUseCase;
 
+    const mockId = "001";
+
     const mockProduto = new Produto({
         nome: "Sobremesa",
         preco: 20.25,
@@ -14,6 +16,7 @@ describe("Given ProdutoUseCases", () => {
         descricao: "Sobremesa de chocolate com morango'",
         imagem: "www.any-image.com",
     });
+
     class ProdutoGatewayStub implements ProdutoGateway {
         create(produto: Produto): Promise<Produto> {
             return Promise.resolve(mockProduto);
@@ -53,6 +56,17 @@ describe("Given ProdutoUseCases", () => {
             expect(createSpy).toHaveBeenCalledWith(mockProduto);
         });
     });
+
+    describe("When getByIds is called", () => {
+        it("should return the produto list", async () => {
+            const getByIdsSpy = jest.spyOn(gatewayStub, "getByIds");
+
+            const produto = await sut.getByIds([mockId]);
+            expect(getByIdsSpy).toHaveBeenCalledWith([mockId]);
+            expect(produto).toEqual([mockProduto]);
+        });
+    });
+
     describe("When getProdutoByCategoria is called", () => {
         it("should call getProdutoByCategoria on the gateway and return the produtos", async () => {
             const getByCategoriaSpy = jest.spyOn(gatewayStub, "getByCategoria");

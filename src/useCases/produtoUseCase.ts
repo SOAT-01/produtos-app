@@ -19,6 +19,10 @@ export class ProdutoUseCase implements IProdutoUseCase {
         return this.produtoGateway.getByCategoria(categoria);
     }
 
+    public async getByIds(ids: string[]): Promise<Produto[]> {
+        return this.produtoGateway.getByIds(ids);
+    }
+
     public async update(
         id: string,
         produto: Omit<Partial<ProdutoDTO>, "id">,

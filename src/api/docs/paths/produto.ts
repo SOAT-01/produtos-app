@@ -72,6 +72,49 @@ export const ProdutoPaths = {
         },
     },
     "/produto": {
+        get: {
+            tags: ["produto"],
+            summary: "Rota para encontrar produtos por lista de ids em query params",
+            parameters: [
+                {
+                    in: "query",
+                    name: "ids",
+                    description: "lista de ids separados por ';', ex: 001;002;003",
+                    required: true,
+                    schema: {
+                        type: "string",
+                    },
+                },
+            ],
+            responses: {
+                200: {
+                    description: "produtos encontrados",
+                    content: {
+                        "application/json": {
+                            schema: {
+                                type: "array",
+                                items: {
+                                    type: "object",
+                                    properties: {
+                                        id: {
+                                            type: "string",
+                                        },
+                                        ...ProdutoFields,
+                                    },
+                                    required: RequiredFields,
+                                },
+                            },
+                        },
+                    },
+                },
+                422: {
+                    ...unprocessableEntity,
+                },
+                500: {
+                    ...serverError,
+                },
+            },
+        },
         post: {
             tags: ["produto"],
             summary: "Rota para cadastrar um produto",
